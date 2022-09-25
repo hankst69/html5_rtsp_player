@@ -77,8 +77,8 @@ export class WSPlayer {
             this.bufferDuration_ = 120;
         }
 
-        this.continuousRecording = new MediaRecorder(this);
-        this.eventRecording = new MediaRecorder(this);
+        this.continuousRecording = new MediaRecorder(this, 'continuous');
+        this.eventRecording = new MediaRecorder(this, 'event');
         this.continuousRecording.fileLength = opts.continuousFileLength || MediaRecorder.DEFAULT_FILE_LENGTH;
         this.eventRecording.fileLength = opts.eventFileLength || MediaRecorder.DEFAULT_FILE_LENGTH;
 
@@ -311,10 +311,10 @@ export class WSPlayer {
         }
     }
 
-    mediadata(data){
+    mediadata(data, prefix){
         if (data !== undefined) {
             if (this.dataHandler){
-                this.dataHandler(data);
+                this.dataHandler(data, prefix);
             }
         }
     }

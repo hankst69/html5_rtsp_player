@@ -43,9 +43,9 @@ window.Streamedian = {
                     opts.infoHandler(inf);
                 }
             },
-            dataHandler(data) {
+            dataHandler(data, prefix) {
                 if(opts.dataHandler) {
-                    opts.dataHandler(data);
+                    opts.dataHandler(data, prefix);
                 }
             },
             redirectNativeMediaErrors: opts.redirectNativeMediaErrors,

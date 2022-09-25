@@ -3,8 +3,9 @@ import {MP4} from './core/iso-bmff/mp4-generator.js';
 export class MediaRecorder {
     static DEFAULT_FILE_LENGTH = 180000; /*download every 3 minutes*/
 
-    constructor(parent) {
+    constructor(parent, prefix) {
         this.parent = parent;
+        this.prefix = prefix;
         this.remuxer;
         this.header;
         this.firstBuffer = new Uint8Array(0);
@@ -86,7 +87,7 @@ export class MediaRecorder {
         let byteBuffer = this.byteBuffer;
         this.swapBuffer();
         if (this.header && byteBuffer.length > this.header.length) {
-            this.parent.mediadata(byteBuffer);
+            this.parent.mediadata(byteBuffer, this.prefix);
         }
     }
 

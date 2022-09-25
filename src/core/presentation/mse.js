@@ -245,7 +245,6 @@ export class MSEBuffer {
             this.parent.eventSource.dispatchEvent('error');
         } else {
             try {
-                this.eventSource.dispatchEvent('mediadata', data);
                 this.sourceBuffer.appendBuffer(data);
                 if (this.firstMoveToBufferStart && this.sourceBuffer.buffered.length) {
                     this.players[0].currentTime = this.sourceBuffer.buffered.start(0);
@@ -419,10 +418,6 @@ export class MSE {
         // TODO: remove event listeners for existing media source
         // this.setupEvents();
         // this.clear();
-    }
-
-    pushData(data) {
-        this.eventSource.dispatchEvent('mediadata', data);
     }
 
     setCodec(track, mimeCodec) {
