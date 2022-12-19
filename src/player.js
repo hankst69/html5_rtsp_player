@@ -79,8 +79,8 @@ export class WSPlayer {
 
         this.continuousRecording = new MediaRecorder(this, 'continuous');
         this.eventRecording = new MediaRecorder(this, 'event');
-        this.continuousRecording.fileLength = opts.continuousFileLength || MediaRecorder.DEFAULT_FILE_LENGTH;
-        this.eventRecording.fileLength = opts.eventFileLength || MediaRecorder.DEFAULT_FILE_LENGTH;
+        this.continuousRecording.setFileLength(opts.continuousFileLength);
+        this.eventRecording.setFileLength(opts.eventFileLength);
 
         this.modules = {};
         for (let module of modules) {
