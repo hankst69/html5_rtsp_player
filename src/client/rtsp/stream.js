@@ -48,7 +48,7 @@ export class RTSPStream {
             return `${sessionBlock.control}${track.control}`;
         } else if (Url.isAbsolute(`${this.client.contentBase}${track.control}`)) {
             /* Check the end of the address for a separator */
-            if (this.client.contentBase[this.client.contentBase.length] !== '/') {
+            if (this.client.contentBase[this.client.contentBase.length - 1] !== '/') {
                 return `${this.client.contentBase}/${track.control}`;
             } 
 
