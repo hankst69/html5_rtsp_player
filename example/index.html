@@ -40,9 +40,10 @@
 <div>
 </div>
 
-<video id="test_video" controls autoplay>
-    <!--<source src="rtsp://192.168.10.205:554/ch01.264" type="application/x-rtsp">-->
-    <!--<source src="rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov" type="application/x-rtsp">-->
+<video id="test_video" controls autoplay src="rtsp://192.168.178.84:554/user=admin&password=DMQRK2d3X-r8&channel=1&stream=1.sdp">
+	<!--source src="rtsp://192.168.178.84:554/user=admin&password=DMQRK2d3X-r8&channel=1&stream=1.sdp" type="application/x-rtsp"-->
+    <!--source src="rtsp://192.168.10.205:554/ch01.264" type="application/x-rtsp"-->
+    <!--source src="rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov" type="application/x-rtsp"-->
 </video>
 
 <div class="controls form">
@@ -179,9 +180,8 @@ To activate key, please, use the activation application that is placed:
             return scrollStatWs;
         }
     }
-
-
 </script>
+
 
 <script>
     if (window.Streamedian) {
@@ -289,11 +289,16 @@ To activate key, please, use the activation application that is placed:
             bufferRange.value     =  player.bufferDuration;
             bufferValue.innerHTML = bufferRange.value + "sec.";
 
-            continuousFileLength.value = player.continuousRecording.fileLength;
-            continuousFileLengthLabel.innerText = `${continuousFileLength.value / 1000} sec.`;
+            if (player.continuousRecording) {
+              player.continuousRecording.record(checkRecord.checked);
+			  continuousFileLength.value = player.continuousRecording.fileLength;
+              continuousFileLengthLabel.innerText = `${continuousFileLength.value / 1000} sec.`;
+			}
 
-            eventFileLength.value = player.eventRecording.fileLength;
-            event_file_length_label.innerText = `${eventFileLength.value / 1000} sec.`;
+			if (player.eventRecording) {
+              eventFileLength.value = player.eventRecording.fileLength;
+              event_file_length_label.innerText = `${eventFileLength.value / 1000} sec.`;
+			}
         };
 
         bufferRange.addEventListener('input', function(){
@@ -306,7 +311,9 @@ To activate key, please, use the activation application that is placed:
         updateRangeControls();
 
         checkRecord.addEventListener('change', function(event) {
-            player.continuousRecording.record(event.target.checked);
+		    if (player.continuousRecording) {
+              player.continuousRecording.record(event.target.checked);
+			}
         });
 
         eventRecording.addEventListener('click', function(event) {
@@ -344,7 +351,6 @@ To activate key, please, use the activation application that is placed:
             player = null;
             html5Player.src = newSource;
             player = Streamedian.player("test_video", playerOptions);
-            player.continuousRecording.record(checkRecord.checked);
             updateRangeControls();
 
             eventRecording.removeAttribute('disabled');
